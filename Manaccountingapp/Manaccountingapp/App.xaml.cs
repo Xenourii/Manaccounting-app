@@ -1,4 +1,5 @@
-﻿using Prism;
+﻿using Manaccountingapp.Services;
+using Prism;
 using Prism.Ioc;
 using Manaccountingapp.ViewModels;
 using Manaccountingapp.Views;
@@ -32,6 +33,8 @@ namespace Manaccountingapp
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<LoginPage>();
+
+            containerRegistry.RegisterSingleton<IRestService>();
         }
     }
 }

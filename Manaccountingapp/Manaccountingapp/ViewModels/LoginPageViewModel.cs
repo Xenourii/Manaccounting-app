@@ -4,11 +4,14 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Manaccountingapp.Models;
+using Manaccountingapp.Services;
 
 namespace Manaccountingapp.ViewModels
 {
 	public class LoginPageViewModel : ViewModelBase
 	{
+	    private readonly IRestService _restService;
 	    private string _email;
 	    private string _password;
 	    private string _apiUrl;
@@ -34,15 +37,19 @@ namespace Manaccountingapp.ViewModels
         public DelegateCommand LoginButtonClickedCommand { get; }
 
 
-        public LoginPageViewModel(INavigationService navigationService) : base(navigationService)
+        public LoginPageViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
+            _restService = restService;
             ApiUrl = "http://localhost:3000/";
             LoginButtonClickedCommand = new DelegateCommand(LoginButtonClicked);
         }
 
-	    private void LoginButtonClicked()
+	    private async void LoginButtonClicked()
 	    {
-	        throw new NotImplementedException();
+	        var url = ApiUrl + "user/login";
+	        var loginInfo = new LoginInfo {Email = Email, Password = Password};
+	        var loginReponse = await _restService.LoginUserAsync(url, loginInfo);
+	        UserSessionToken = loginReponse.Token;
 	    }
 	}
 }

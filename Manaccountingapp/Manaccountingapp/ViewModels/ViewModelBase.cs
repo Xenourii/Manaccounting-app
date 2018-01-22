@@ -18,6 +18,8 @@ namespace Manaccountingapp.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        public static string UserSessionToken { get; set; }
+
         public ViewModelBase(INavigationService navigationService)
         {
             NavigationService = navigationService;
