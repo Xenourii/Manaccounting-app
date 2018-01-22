@@ -48,9 +48,10 @@ namespace Manaccountingapp.ViewModels
 
 	    private async void LoginButtonClicked()
 	    {
-            var url = ApiUrl + "api/user/login";
+	        UserApiUrl = ApiUrl;
+            var url = UserApiUrl + "api/user/login";
             var loginInfo = new LoginInfo { Email = Email, Password = Password };
-            var loginReponse = await _restService.LoginUserAsync(url, loginInfo);
+            var loginReponse = await _restService.LoginUserPostAsync(url, loginInfo);
             UserSessionToken = loginReponse.Token;
 
 	        await _navigationService.NavigateAsync("ProductsPage");

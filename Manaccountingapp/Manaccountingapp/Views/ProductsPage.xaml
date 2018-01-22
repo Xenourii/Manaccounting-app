@@ -4,5 +4,16 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Manaccountingapp.Views.ProductsPage">
+    
+    <ContentPage.Content>
+        <ListView SelectedItem="{Binding Products}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding .Name}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+    </ContentPage.Content>
   
 </ContentPage>

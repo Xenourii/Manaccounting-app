@@ -19,6 +19,7 @@ namespace Manaccountingapp.ViewModels
         }
 
         public static string UserSessionToken { get; set; }
+        public static string UserApiUrl { get; set; }
 
         public ViewModelBase(INavigationService navigationService)
         {

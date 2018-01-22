@@ -18,7 +18,7 @@ namespace Manaccountingapp.Services
             _client = new HttpClient {MaxResponseContentBufferSize = 256000};
         }
 
-        public async Task<Product> GetDataAsync(string url)
+        public async Task<Product> GetProductDataAsync(string url)
         {
             var response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -30,7 +30,19 @@ namespace Manaccountingapp.Services
             return new Product(); //TODO
         }
 
-        public async Task<LoginResponse> LoginUserAsync(string url, LoginInfo loginInfo)
+        public async Task<List<Product>> GetProductsDataAsync(string url)
+        {
+            var response = await _client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Product>>(content);
+            }
+
+            return new List<Product>(); //TODO
+        }
+
+        public async Task<LoginResponse> LoginUserPostAsync(string url, LoginInfo loginInfo)
         {
             var json = JsonConvert.SerializeObject(loginInfo);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
