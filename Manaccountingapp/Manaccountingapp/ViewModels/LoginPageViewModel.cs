@@ -11,6 +11,7 @@ namespace Manaccountingapp.ViewModels
 {
 	public class LoginPageViewModel : ViewModelBase
 	{
+	    private readonly INavigationService _navigationService;
 	    private readonly IRestService _restService;
 	    private string _email;
 	    private string _password;
@@ -39,17 +40,20 @@ namespace Manaccountingapp.ViewModels
 
         public LoginPageViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
+            _navigationService = navigationService;
             _restService = restService;
-            ApiUrl = "http://localhost:3000/";
+            ApiUrl = "http://192.168.1.17:3000/";
             LoginButtonClickedCommand = new DelegateCommand(LoginButtonClicked);
         }
 
 	    private async void LoginButtonClicked()
 	    {
-	        var url = ApiUrl + "user/login";
-	        var loginInfo = new LoginInfo {Email = Email, Password = Password};
-	        var loginReponse = await _restService.LoginUserAsync(url, loginInfo);
-	        UserSessionToken = loginReponse.Token;
+            var url = ApiUrl + "api/user/login";
+            var loginInfo = new LoginInfo { Email = Email, Password = Password };
+            var loginReponse = await _restService.LoginUserAsync(url, loginInfo);
+            UserSessionToken = loginReponse.Token;
+
+	        await _navigationService.NavigateAsync("ProductsPage");
 	    }
 	}
 }

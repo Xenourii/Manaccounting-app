@@ -30,11 +30,12 @@ namespace Manaccountingapp
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<IRestService, RestService>();
+
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<LoginPage>();
-
-            containerRegistry.RegisterSingleton<IRestService>();
+            containerRegistry.RegisterForNavigation<ProductsPage>();
         }
     }
 }
