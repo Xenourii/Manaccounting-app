@@ -7,7 +7,22 @@
              Title="Product information">
     
     <StackLayout>
-        <Label Text="{Binding Product.Name}" FontSize="20"/>
+        <Label Text="General Informations" FontAttributes="Bold"/>
+        <Label Text="{Binding Name}" FontSize="20"/>
+        <Label Text="{Binding Category}"/>
+        <Label Text="{Binding Price}"/>
+
+        <Label Text="Technical informations" FontAttributes="Bold"/>
+        <Label Text="{Binding Memory}"/>
+        <Label Text="{Binding Refresh_Rate}"/>
+        <Label Text="{Binding Battery_Life}"/>
+        <Label Text="{Binding Os}"/>
+        <Label Text="{Binding Interface}"/>
+        
+        <Label Text="Commercial informations" FontAttributes="Bold"/>
+        <Label Text="{Binding Guarantee}"/>
+        <Label Text="{Binding Contact_Mail}"/>
+        <Label Text="{Binding Return_Address}"/>
     </StackLayout>
   
 </ContentPage>

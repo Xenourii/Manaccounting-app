@@ -14,7 +14,7 @@ namespace Manaccountingapp.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IRestService _restService;
         private List<Product> _products;
-        private bool _refreshButtonEnabled;
+        private bool _refreshButtonEnabled = true;
 
         public List<Product> Products
 	    {
