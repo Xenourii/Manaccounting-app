@@ -36,6 +36,7 @@ namespace Manaccountingapp
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<LoginPage>();
             containerRegistry.RegisterForNavigation<ProductsPage>();
+            containerRegistry.RegisterForNavigation<ProductPage>();
         }
     }
 }

@@ -2,14 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:manaccountingapp="clr-namespace:Manaccountingapp;assembly=Manaccountingapp"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Manaccountingapp.Views.ProductsPage" 
              Title="Products">
-    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <manaccountingapp:ItemTappedEventArgsConverter x:Key="itemTappedEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         
         <StackLayout>
-            <Button Text="Refresh" Command="{Binding RefreshButtonClickedCommand}"/>
+            <Button Text="Refresh" Command="{Binding RefreshButtonClickedCommand}" IsEnabled="{Binding RefreshButtonEnabled}"/>
             
             <ListView ItemsSource="{Binding Products}">
                 <ListView.ItemTemplate>
@@ -17,6 +25,12 @@
                         <TextCell Text="{Binding .Name}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped" 
+                        Command="{Binding ItemTappedCommand}"
+                        EventArgsConverter="{StaticResource itemTappedEventArgsConverter}" />
+                </ListView.Behaviors>
             </ListView>
         </StackLayout>
                   
