@@ -42,7 +42,7 @@ namespace Manaccountingapp.ViewModels
         {
             _navigationService = navigationService;
             _restService = restService;
-            ApiUrl = "http://192.168.1.17:3000/";
+            ApiUrl = "http://192.168.1.16:3000/";
             LoginButtonClickedCommand = new DelegateCommand(LoginButtonClicked);
         }
 

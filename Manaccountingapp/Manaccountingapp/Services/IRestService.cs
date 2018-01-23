@@ -6,8 +6,8 @@ namespace Manaccountingapp.Services
 {
     public interface IRestService
     {
-        Task<Product> GetProductDataAsync(string url);
-        Task<List<Product>> GetProductsDataAsync(string url);
+        Task<Product> GetProductDataAsync(string url, string token);
+        Task<List<Product>> GetProductsDataAsync(string url, string token);
         Task<LoginResponse> LoginUserPostAsync(string url, LoginInfo loginInfo);
     }
 }
