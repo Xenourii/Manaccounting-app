@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Manaccountingapp.Models;
 using Manaccountingapp.Services;
+using Xamarin.Forms;
 
 namespace Manaccountingapp.ViewModels
 {
@@ -145,6 +146,8 @@ namespace Manaccountingapp.ViewModels
 	    {
             var orderInfo = new OrderInfo{ProductId = Product.Id, ProductNumber = NumberToOrder};
 	        var orderResponse = await _restService.OrderPostAsync(UserApiUrl + "api/order", orderInfo, UserSessionToken);
+	        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            Device.OpenUri(new Uri(UserApiUrl + "Public/invoice_" + orderResponse.OrderId + ".pdf"));
 	    }
 
 	    public override void OnNavigatingTo(NavigationParameters parameters)
@@ -154,7 +157,7 @@ namespace Manaccountingapp.ViewModels
 	            Product = (Product) parameters["product"];
 
 	        Name = Product.Name;
-	        Price = Product.Price + " €";
+	        Price = "Price: €" + Product.Price;
 	        Description = "Description: " + Product.Description;
 	        Category = "Category " + Product.Category;
 	        Brand = "Brand: " + Product.Brand;
