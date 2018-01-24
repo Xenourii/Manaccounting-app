@@ -23,6 +23,12 @@
         <Label Text="{Binding Guarantee}"/>
         <Label Text="{Binding Contact_Mail}"/>
         <Label Text="{Binding Return_Address}"/>
+        
+        <Label Text="Order that product (choose the numer): "/>
+        <Entry Keyboard="Numeric" Text="{Binding NumberToOrder}"/>
+        <Button Text="Order" Command="{Binding OnOrderButtonClickedCommand}" IsEnabled="{Binding IsOrderButtonEnabled}"/>
+        
+        
     </StackLayout>
   
 </ContentPage>

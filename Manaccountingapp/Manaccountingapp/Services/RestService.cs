@@ -20,6 +20,7 @@ namespace Manaccountingapp.Services
 
         public async Task<Product> GetProductDataAsync(string url, string token)
         {
+            _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Add("Authorization", "JWT " + token);
             var response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -33,6 +34,7 @@ namespace Manaccountingapp.Services
 
         public async Task<List<Product>> GetProductsDataAsync(string url, string token)
         {
+            _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Add("Authorization", "JWT " + token);
             var response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -59,6 +61,24 @@ namespace Manaccountingapp.Services
             }
 
             return new LoginResponse(); //TODO
+        }
+
+        public async Task<OrderResponse> OrderPostAsync(string url, OrderInfo orderInfo, string token)
+        {
+            var json = JsonConvert.SerializeObject(orderInfo);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Add("Authorization", "JWT " + token);
+            var response = await _client.PostAsync(url, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<OrderResponse>(responseContent);
+            }
+
+            return new OrderResponse(); //TODO
         }
     }
 }

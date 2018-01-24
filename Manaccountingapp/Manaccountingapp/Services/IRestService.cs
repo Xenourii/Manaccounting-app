@@ -9,5 +9,6 @@ namespace Manaccountingapp.Services
         Task<Product> GetProductDataAsync(string url, string token);
         Task<List<Product>> GetProductsDataAsync(string url, string token);
         Task<LoginResponse> LoginUserPostAsync(string url, LoginInfo loginInfo);
+        Task<OrderResponse> OrderPostAsync(string url, OrderInfo orderInfo, string token);
     }
 }

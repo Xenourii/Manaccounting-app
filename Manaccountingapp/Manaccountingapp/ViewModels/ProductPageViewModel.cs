@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Manaccountingapp.Models;
+using Manaccountingapp.Services;
 
 namespace Manaccountingapp.ViewModels
 {
 	public class ProductPageViewModel : ViewModelBase
 	{
+	    private readonly IRestService _restService;
 	    private Product _product;
 	    private string _price;
 	    private string _name;
@@ -24,6 +26,8 @@ namespace Manaccountingapp.ViewModels
 	    private string _guarantee;
 	    private string _contactMail;
 	    private string _returnAddress;
+	    private int _numberToOrder = 0;
+	    private bool _isOrderButtonEnabled = true;
 
 	    public Product Product
 	    {
@@ -31,88 +35,117 @@ namespace Manaccountingapp.ViewModels
 	        set => SetProperty(ref _product, value);
 	    }
 
+	    public int NumberToOrder
+	    {
+	        get { return _numberToOrder; }
+	        set
+	        {
+                if(_numberToOrder.Equals(value))
+                    return;
+	            _numberToOrder = value;
+	            if (_numberToOrder < 0) _numberToOrder = 0;
+                RaisePropertyChanged();
+	            IsOrderButtonEnabled = NumberToOrder > 0;
+	        }
+	    }
+
+	    public bool IsOrderButtonEnabled
+	    {
+	        get => _isOrderButtonEnabled;
+	        set => SetProperty(ref _isOrderButtonEnabled, value);
+	    }
+
 	    public string Name
 	    {
-	        get { return _name; }
-	        set { SetProperty(ref _name, value); }
+	        get => _name;
+	        set => SetProperty(ref _name, value);
 	    }
 
 	    public string Price
 	    {
-	        get { return _price; }
-	        set { SetProperty(ref _price, value); }
+	        get => _price;
+	        set => SetProperty(ref _price, value);
 	    }
 
 	    public string Description
 	    {
-	        get { return _description; }
-	        set { SetProperty(ref _description, value); }
+	        get => _description;
+	        set => SetProperty(ref _description, value);
 	    }
 
 	    public string Category
 	    {
-	        get { return _category; }
-	        set { SetProperty(ref _category, value); }
+	        get => _category;
+	        set => SetProperty(ref _category, value);
 	    }
 
 	    public string Brand
 	    {
-	        get { return _brand; }
-	        set { SetProperty(ref _brand, value); }
+	        get => _brand;
+	        set => SetProperty(ref _brand, value);
 	    }
 
 	    public string Memory
 	    {
-	        get { return _memory; }
-	        set { SetProperty(ref _memory, value); }
+	        get => _memory;
+	        set => SetProperty(ref _memory, value);
 	    }
 
 	    public string Refresh_Rate
 	    {
-	        get { return _refreshRate; }
-	        set { SetProperty(ref _refreshRate, value); }
+	        get => _refreshRate;
+	        set => SetProperty(ref _refreshRate, value);
 	    }
 
 	    public string Battery_Life
 	    {
-	        get { return _batteryLife; }
-	        set { SetProperty(ref _batteryLife, value); }
+	        get => _batteryLife;
+	        set => SetProperty(ref _batteryLife, value);
 	    }
 
 	    public string Os
 	    {
-	        get { return _os; }
-	        set { SetProperty(ref _os, value); }
+	        get => _os;
+	        set => SetProperty(ref _os, value);
 	    }
 
 	    public string Interface
 	    {
-	        get { return _interface; }
-	        set { SetProperty(ref _interface, value); }
+	        get => _interface;
+	        set => SetProperty(ref _interface, value);
 	    }
 
 	    public string Guarantee
 	    {
-	        get { return _guarantee; }
-	        set { SetProperty(ref _guarantee, value); }
+	        get => _guarantee;
+	        set => SetProperty(ref _guarantee, value);
 	    }
 
 	    public string Contact_Mail
 	    {
-	        get { return _contactMail; }
-	        set { SetProperty(ref _contactMail, value); }
+	        get => _contactMail;
+	        set => SetProperty(ref _contactMail, value);
 	    }
 
 	    public string Return_Address
 	    {
-	        get { return _returnAddress; }
-	        set { SetProperty(ref _returnAddress, value); }
+	        get => _returnAddress;
+	        set => SetProperty(ref _returnAddress, value);
 	    }
 
+        public DelegateCommand OnOrderButtonClickedCommand { get; }
 
-	    public ProductPageViewModel(INavigationService navigationService) : base(navigationService)
+        public ProductPageViewModel(INavigationService navigationService, IRestService restService) : base(navigationService)
         {
+            _restService = restService;
+            OnOrderButtonClickedCommand = new DelegateCommand(OnOrderButtonClicked);
         }
+
+	    private async void OnOrderButtonClicked()
+	    {
+            var orderInfo = new OrderInfo{ProductId = Product.Id, ProductNumber = NumberToOrder};
+	        var orderResponse = await _restService.OrderPostAsync(UserApiUrl + "api/order", orderInfo, UserSessionToken);
+	    }
 
 	    public override void OnNavigatingTo(NavigationParameters parameters)
 	    {
